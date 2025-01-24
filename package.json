@@ -1,0 +1,19 @@
+{
+  "name": "musicdb",
+  "version": "1.0.0",
+  "description": "Discography database",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "music"
+  ],
+  "author": "Waaiz Khan",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^3.3.12",
+    "koa": "^2.15.3",
+    "log4js": "^6.9.1"
+  }
+}

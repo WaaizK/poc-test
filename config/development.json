@@ -1,0 +1,12 @@
+{
+    "log4js": {
+        "categories": 
+            { 
+                "default": 
+                { 
+                    "appenders": ["console"],
+                    "level": "debug" 
+                } 
+            }
+    }
+}

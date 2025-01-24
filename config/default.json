@@ -1,0 +1,31 @@
+{ 
+    "port": 8081,
+    
+    "password": "postgres",
+
+    "log4js": {
+        "appenders": 
+            {   
+                "file": 
+                {
+                    "type": "file",
+                    "filename": "cheese.log",
+                    "maxLogSize": "5M", 
+                    "backups": 2 
+                }, 
+                "console": 
+                { 
+                    "type": "console"
+                }
+            },
+        "categories": 
+            { 
+               "default": 
+                { 
+                   "appenders": ["file"],
+                    "level": "debug" 
+                } 
+            }
+        }
+    
+}
