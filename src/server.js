@@ -2,13 +2,14 @@ const log4js = require("log4js");
 const config = require("config");
 const Koa = require('koa');
 const fs = require('fs');
+const https = require('https');
 
 
 log4js.configure(config.get("log4js"));
   
 const logger = log4js.getLogger("oops");
   
-const portNum = config.get("port");
+const portNum = config.get("secure-port"); // getting port from config file
 logger.info(`The port number is: ${portNum}`);
 
 //console.log("hello");
@@ -17,9 +18,15 @@ logger.error("Cheese is too ripe!");
 //console.log("byebye");
 logger.debug("Got cheese.");
 
-
 const app = new Koa();
-const PORT = process.env.PORT || 8080
+
+const options = {
+    key: fs.readFileSync('certs/private-key.pem'),
+    cert: fs.readFileSync('certs/certificate.pem'),
+  };
+  
+
+
 
 // response
 app.use(async (ctx, next) => {
@@ -41,8 +48,10 @@ app.use(async (ctx) => {
 });
 
 try {
-    const server = app.listen(portNum, () => {logger.info(`Listening on port: ${portNum}`);});
-    server.on('error', httpErrorHandler)
+    const server = https.createServer(options, app.callback());
+    server.on('error', httpErrorHandler);
+    server.listen(portNum, () => {logger.info(`Listening on port: ${portNum}`);});
+    //const server = app.listen(portNum, () => {logger.info(`Listening on port: ${portNum}`);});
 } catch(error) {
     logger.error(`Encountered an error: ${error}`);
 }
@@ -58,5 +67,5 @@ function wait(ms) {
 
 function httpErrorHandler (err) {
     logger.error("(in httepErrorHandler) Encountered an error: ");
-    console.error(err.message)
+    console.error(err.message);
 }
